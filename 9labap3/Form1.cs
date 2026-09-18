@@ -21,74 +21,73 @@ namespace _9labap3
         private void InitializeComponent()
         {
             this.Text = "🏭 Учёт СИЗ в цеху";
-            this.Size = new Size(950, 650);
+            this.Size = new Size(1000, 700);
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.Font = new Font("Segoe UI", 9);
 
             var tabs = new TabControl { Dock = DockStyle.Fill };
 
-            // ===== Вкладка 1: Сотрудники =====
+            // ============================================
+            // ВКЛАДКА 1: СОТРУДНИКИ
+            // ============================================
             var tabEmp = new TabPage("👤 Сотрудники");
 
-            var panelEmp = new Panel { Dock = DockStyle.Top, Height = 50 };
-            var btnAddEmp = new Button { Text = "➕ Добавить", Left = 10, Top = 10, Width = 120 };
-            var btnEditEmp = new Button { Text = "✏️ Изменить", Left = 140, Top = 10, Width = 120 };
-            var btnDelEmp = new Button { Text = "❌ Удалить", Left = 270, Top = 10, Width = 120 };
-            var btnRefresh = new Button { Text = "🔄 Обновить", Left = 400, Top = 10, Width = 120 };
+            var panelEmp = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Color.FromArgb(245, 245, 245) };
+            var btnAddEmp = CreateButton("➕ Добавить", 10, Color.FromArgb(76, 175, 80));
+            var btnEditEmp = CreateButton("✏️ Изменить", 150, Color.FromArgb(255, 152, 0));
+            var btnDelEmp = CreateButton("❌ Удалить", 290, Color.FromArgb(244, 67, 54));
+            var btnRefreshEmp = CreateButton("🔄 Обновить", 430, Color.FromArgb(33, 150, 243));
 
             btnAddEmp.Click += (s, e) => AddEmployee();
             btnEditEmp.Click += (s, e) => EditEmployee();
             btnDelEmp.Click += (s, e) => DeleteEmployee();
-            btnRefresh.Click += (s, e) => LoadData();
+            btnRefreshEmp.Click += (s, e) => LoadData();
 
-            panelEmp.Controls.AddRange(new Control[] { btnAddEmp, btnEditEmp, btnDelEmp, btnRefresh });
+            panelEmp.Controls.AddRange(new Control[] { btnAddEmp, btnEditEmp, btnDelEmp, btnRefreshEmp });
 
-            gridEmployees = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                ReadOnly = true,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AllowUserToAddRows = false
-            };
-
+            gridEmployees = CreateGrid();
             tabEmp.Controls.Add(gridEmployees);
             tabEmp.Controls.Add(panelEmp);
 
-            // ===== Вкладка 2: Каталог СИЗ =====
+            // ============================================
+            // ВКЛАДКА 2: КАТАЛОГ СИЗ
+            // ============================================
             var tabSIZ = new TabPage("📚 Каталог СИЗ");
-            gridSIZ = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                ReadOnly = true,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AllowUserToAddRows = false
-            };
-            tabSIZ.Controls.Add(gridSIZ);
 
-            // ===== Вкладка 3: Выданные СИЗ =====
+            var panelSIZ = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Color.FromArgb(245, 245, 245) };
+            var btnAddSIZ = CreateButton("➕ Добавить", 10, Color.FromArgb(76, 175, 80));
+            var btnEditSIZ = CreateButton("✏️ Изменить", 150, Color.FromArgb(255, 152, 0));
+            var btnDelSIZ = CreateButton("❌ Удалить", 290, Color.FromArgb(244, 67, 54));
+            var btnRefreshSIZ = CreateButton("🔄 Обновить", 430, Color.FromArgb(33, 150, 243));
+
+            btnAddSIZ.Click += (s, e) => AddSIZ();
+            btnEditSIZ.Click += (s, e) => EditSIZ();
+            btnDelSIZ.Click += (s, e) => DeleteSIZ();
+            btnRefreshSIZ.Click += (s, e) => LoadData();
+
+            panelSIZ.Controls.AddRange(new Control[] { btnAddSIZ, btnEditSIZ, btnDelSIZ, btnRefreshSIZ });
+
+            gridSIZ = CreateGrid();
+            tabSIZ.Controls.Add(gridSIZ);
+            tabSIZ.Controls.Add(panelSIZ);
+
+            // ============================================
+            // ВКЛАДКА 3: ВЫДАННЫЕ СИЗ
+            // ============================================
             var tabIssued = new TabPage("📦 Выданные СИЗ");
 
-            var panelIssued = new Panel { Dock = DockStyle.Top, Height = 50 };
-            var btnIssue = new Button { Text = "📋 Выдать СИЗ", Left = 10, Top = 10, Width = 150 };
-            var btnWriteOff = new Button { Text = "🔄 Списать", Left = 170, Top = 10, Width = 120 };
-            var btnRefresh2 = new Button { Text = "🔄 Обновить", Left = 300, Top = 10, Width = 120 };
+            var panelIssued = new Panel { Dock = DockStyle.Top, Height = 60, BackColor = Color.FromArgb(245, 245, 245) };
+            var btnIssue = CreateButton("📋 Выдать СИЗ", 10, Color.FromArgb(76, 175, 80));
+            var btnWriteOff = CreateButton("🔄 Списать", 150, Color.FromArgb(244, 67, 54));
+            var btnRefreshIssued = CreateButton("🔄 Обновить", 290, Color.FromArgb(33, 150, 243));
 
             btnIssue.Click += (s, e) => IssueSIZ();
             btnWriteOff.Click += (s, e) => WriteOffSIZ();
-            btnRefresh2.Click += (s, e) => LoadData();
+            btnRefreshIssued.Click += (s, e) => LoadData();
 
-            panelIssued.Controls.AddRange(new Control[] { btnIssue, btnWriteOff, btnRefresh2 });
+            panelIssued.Controls.AddRange(new Control[] { btnIssue, btnWriteOff, btnRefreshIssued });
 
-            gridIssued = new DataGridView
-            {
-                Dock = DockStyle.Fill,
-                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                ReadOnly = true,
-                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                AllowUserToAddRows = false
-            };
-
+            gridIssued = CreateGrid();
             tabIssued.Controls.Add(gridIssued);
             tabIssued.Controls.Add(panelIssued);
 
@@ -99,9 +98,56 @@ namespace _9labap3
             this.Controls.Add(tabs);
         }
 
+        // ============================================
+        // ХЕЛПЕРЫ
+        // ============================================
+
+        private Button CreateButton(string text, int left, Color backColor)
+        {
+            var btn = new Button
+            {
+                Text = text,
+                Left = left,
+                Top = 12,
+                Width = 130,
+                Height = 36,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                BackColor = backColor,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            return btn;
+        }
+
+        private DataGridView CreateGrid()
+        {
+            return new DataGridView
+            {
+                Dock = DockStyle.Fill,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                ReadOnly = true,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                AllowUserToAddRows = false,
+                BackgroundColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                RowHeadersVisible = false,
+                Font = new Font("Segoe UI", 9),
+                ColumnHeadersHeight = 35,
+                EnableHeadersVisualStyles = false,
+                ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(25, 118, 210),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                    Alignment = DataGridViewContentAlignment.MiddleLeft
+                }
+            };
+        }
+
         private void LoadData()
         {
-            // Сотрудники
             gridEmployees.DataSource = null;
             gridEmployees.DataSource = DatabaseHelper.GetEmployees()
                 .Select(e => new
@@ -112,7 +158,6 @@ namespace _9labap3
                     Отдел = e.Department
                 }).ToList();
 
-            // СИЗ
             gridSIZ.DataSource = null;
             gridSIZ.DataSource = DatabaseHelper.GetSIZList()
                 .Select(s => new
@@ -123,7 +168,6 @@ namespace _9labap3
                     Срок_мес = s.WearPeriodMonths
                 }).ToList();
 
-            // Выдачи
             gridIssued.DataSource = null;
             gridIssued.DataSource = DatabaseHelper.GetIssuedSIZ()
                 .Select(i => new
@@ -137,28 +181,48 @@ namespace _9labap3
                 }).ToList();
         }
 
+        // ============================================
+        // СОТРУДНИКИ
+        // ============================================
+
         private void AddEmployee()
         {
-            var form = new Form
+            var form = CreateForm("➕ Новый сотрудник", 420, 280);
+
+            var txtN = AddInputField(form, "ФИО:", 20);
+            var txtP = AddInputField(form, "Должность:", 70);
+            var txtD = AddInputField(form, "Отдел/Цех:", 120);
+
+            var btnOk = new Button
             {
-                Text = "➕ Новый сотрудник",
-                Size = new Size(400, 250),
-                StartPosition = FormStartPosition.CenterParent,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                MaximizeBox = false,
-                MinimizeBox = false
+                Text = "💾 Сохранить",
+                Left = 130,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                BackColor = Color.FromArgb(76, 175, 80),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
             };
+            btnOk.FlatAppearance.BorderSize = 0;
 
-            var lblN = new Label { Text = "ФИО:", Left = 20, Top = 20, Width = 100 };
-            var txtN = new TextBox { Left = 130, Top = 20, Width = 220 };
-            var lblP = new Label { Text = "Должность:", Left = 20, Top = 60, Width = 100 };
-            var txtP = new TextBox { Left = 130, Top = 60, Width = 220 };
-            var lblD = new Label { Text = "Отдел/Цех:", Left = 20, Top = 100, Width = 100 };
-            var txtD = new TextBox { Left = 130, Top = 100, Width = 220 };
-            var btnOk = new Button { Text = "Сохранить", Left = 130, Top = 150, Width = 100, DialogResult = DialogResult.OK };
-            var btnCancel = new Button { Text = "Отмена", Left = 250, Top = 150, Width = 100, DialogResult = DialogResult.Cancel };
+            var btnCancel = new Button
+            {
+                Text = "❌ Отмена",
+                Left = 260,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            btnCancel.FlatAppearance.BorderSize = 0;
 
-            form.Controls.AddRange(new Control[] { lblN, txtN, lblP, txtP, lblD, txtD, btnOk, btnCancel });
+            form.Controls.Add(btnOk);
+            form.Controls.Add(btnCancel);
+            form.AcceptButton = btnOk;
+            form.CancelButton = btnCancel;
 
             if (form.ShowDialog() == DialogResult.OK)
             {
@@ -189,26 +253,40 @@ namespace _9labap3
             var emp = DatabaseHelper.GetEmployees().FirstOrDefault(e => e.Id == id);
             if (emp == null) return;
 
-            var form = new Form
+            var form = CreateForm("✏️ Редактировать", 420, 280);
+
+            var txtN = AddInputField(form, "ФИО:", 20, emp.FullName);
+            var txtP = AddInputField(form, "Должность:", 70, emp.Position);
+            var txtD = AddInputField(form, "Отдел/Цех:", 120, emp.Department);
+
+            var btnOk = new Button
             {
-                Text = "✏️ Редактировать",
-                Size = new Size(400, 250),
-                StartPosition = FormStartPosition.CenterParent,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                MaximizeBox = false,
-                MinimizeBox = false
+                Text = "💾 Сохранить",
+                Left = 130,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                BackColor = Color.FromArgb(255, 152, 0),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
             };
+            btnOk.FlatAppearance.BorderSize = 0;
 
-            var lblN = new Label { Text = "ФИО:", Left = 20, Top = 20, Width = 100 };
-            var txtN = new TextBox { Left = 130, Top = 20, Width = 220, Text = emp.FullName };
-            var lblP = new Label { Text = "Должность:", Left = 20, Top = 60, Width = 100 };
-            var txtP = new TextBox { Left = 130, Top = 60, Width = 220, Text = emp.Position };
-            var lblD = new Label { Text = "Отдел/Цех:", Left = 20, Top = 100, Width = 100 };
-            var txtD = new TextBox { Left = 130, Top = 100, Width = 220, Text = emp.Department };
-            var btnOk = new Button { Text = "Сохранить", Left = 130, Top = 150, Width = 100, DialogResult = DialogResult.OK };
-            var btnCancel = new Button { Text = "Отмена", Left = 250, Top = 150, Width = 100, DialogResult = DialogResult.Cancel };
+            var btnCancel = new Button
+            {
+                Text = "❌ Отмена",
+                Left = 260,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            btnCancel.FlatAppearance.BorderSize = 0;
 
-            form.Controls.AddRange(new Control[] { lblN, txtN, lblP, txtP, lblD, txtD, btnOk, btnCancel });
+            form.Controls.Add(btnOk);
+            form.Controls.Add(btnCancel);
 
             if (form.ShowDialog() == DialogResult.OK)
             {
@@ -241,6 +319,160 @@ namespace _9labap3
             }
         }
 
+        // ============================================
+        // КАТАЛОГ СИЗ
+        // ============================================
+
+        private void AddSIZ()
+        {
+            var form = CreateForm("➕ Новый СИЗ", 420, 280);
+
+            var txtName = AddInputField(form, "Название:", 20);
+            var txtSize = AddInputField(form, "Размер:", 70);
+            var txtPeriod = AddInputField(form, "Срок носки (мес):", 120, "12");
+
+            var btnOk = new Button
+            {
+                Text = "💾 Сохранить",
+                Left = 130,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                BackColor = Color.FromArgb(76, 175, 80),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
+            };
+            btnOk.FlatAppearance.BorderSize = 0;
+
+            var btnCancel = new Button
+            {
+                Text = "❌ Отмена",
+                Left = 260,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            btnCancel.FlatAppearance.BorderSize = 0;
+
+            form.Controls.Add(btnOk);
+            form.Controls.Add(btnCancel);
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                if (string.IsNullOrWhiteSpace(txtName.Text))
+                {
+                    MessageBox.Show("Название обязательно!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!int.TryParse(txtPeriod.Text, out int period) || period <= 0)
+                {
+                    MessageBox.Show("Некорректный срок носки!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DatabaseHelper.AddSIZ(txtName.Text, txtSize.Text, period);
+                LoadData();
+                MessageBox.Show("СИЗ добавлен!", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void EditSIZ()
+        {
+            if (gridSIZ.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите СИЗ!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int id = Convert.ToInt32(gridSIZ.SelectedRows[0].Cells["ID"].Value);
+            var siz = DatabaseHelper.GetSIZList().FirstOrDefault(s => s.Id == id);
+            if (siz == null) return;
+
+            var form = CreateForm("✏️ Редактировать СИЗ", 420, 280);
+
+            var txtName = AddInputField(form, "Название:", 20, siz.Name);
+            var txtSize = AddInputField(form, "Размер:", 70, siz.Size);
+            var txtPeriod = AddInputField(form, "Срок носки (мес):", 120, siz.WearPeriodMonths.ToString());
+
+            var btnOk = new Button
+            {
+                Text = "💾 Сохранить",
+                Left = 130,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                BackColor = Color.FromArgb(255, 152, 0),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
+            };
+            btnOk.FlatAppearance.BorderSize = 0;
+
+            var btnCancel = new Button
+            {
+                Text = "❌ Отмена",
+                Left = 260,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            btnCancel.FlatAppearance.BorderSize = 0;
+
+            form.Controls.Add(btnOk);
+            form.Controls.Add(btnCancel);
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                if (!int.TryParse(txtPeriod.Text, out int period) || period <= 0)
+                {
+                    MessageBox.Show("Некорректный срок носки!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DatabaseHelper.UpdateSIZ(id, txtName.Text, txtSize.Text, period);
+                LoadData();
+                MessageBox.Show("СИЗ обновлён!", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void DeleteSIZ()
+        {
+            if (gridSIZ.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите СИЗ!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int id = Convert.ToInt32(gridSIZ.SelectedRows[0].Cells["ID"].Value);
+            string name = gridSIZ.SelectedRows[0].Cells["Название"].Value.ToString();
+
+            if (MessageBox.Show($"Удалить СИЗ '{name}'?", "Подтверждение",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                DatabaseHelper.DeleteSIZ(id);
+                LoadData();
+                MessageBox.Show("СИЗ удалён!", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        // ============================================
+        // ВЫДАЧА СИЗ
+        // ============================================
+
         private void IssueSIZ()
         {
             var emps = DatabaseHelper.GetEmployees();
@@ -253,45 +485,60 @@ namespace _9labap3
                 return;
             }
 
-            var form = new Form
-            {
-                Text = "📋 Выдача СИЗ",
-                Size = new Size(480, 280),
-                StartPosition = FormStartPosition.CenterParent,
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                MaximizeBox = false,
-                MinimizeBox = false
-            };
+            var form = CreateForm("📋 Выдача СИЗ", 500, 320);
 
             var lblE = new Label { Text = "Сотрудник:", Left = 20, Top = 20, Width = 100 };
             var cmbE = new ComboBox
             {
                 Left = 130,
                 Top = 20,
-                Width = 300,
+                Width = 320,
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 DataSource = emps,
                 DisplayMember = "FullName",
                 ValueMember = "Id"
             };
 
-            var lblS = new Label { Text = "СИЗ:", Left = 20, Top = 60, Width = 100 };
+            var lblS = new Label { Text = "СИЗ:", Left = 20, Top = 65, Width = 100 };
             var cmbS = new ComboBox
             {
                 Left = 130,
-                Top = 60,
-                Width = 300,
+                Top = 65,
+                Width = 320,
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 DataSource = sizs,
                 DisplayMember = "Name",
                 ValueMember = "Id"
             };
 
-            var lblQ = new Label { Text = "Количество:", Left = 20, Top = 100, Width = 100 };
-            var txtQ = new TextBox { Left = 130, Top = 100, Width = 80, Text = "1" };
+            var lblQ = new Label { Text = "Количество:", Left = 20, Top = 110, Width = 100 };
+            var txtQ = new TextBox { Left = 130, Top = 110, Width = 100, Text = "1" };
 
-            var btnOk = new Button { Text = "Выдать", Left = 130, Top = 150, Width = 100, DialogResult = DialogResult.OK };
-            var btnCancel = new Button { Text = "Отмена", Left = 250, Top = 150, Width = 100, DialogResult = DialogResult.Cancel };
+            var btnOk = new Button
+            {
+                Text = "📋 Выдать",
+                Left = 130,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                BackColor = Color.FromArgb(76, 175, 80),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.OK
+            };
+            btnOk.FlatAppearance.BorderSize = 0;
+
+            var btnCancel = new Button
+            {
+                Text = "❌ Отмена",
+                Left = 260,
+                Top = 180,
+                Width = 120,
+                Height = 35,
+                FlatStyle = FlatStyle.Flat,
+                DialogResult = DialogResult.Cancel
+            };
+            btnCancel.FlatAppearance.BorderSize = 0;
 
             form.Controls.AddRange(new Control[] { lblE, cmbE, lblS, cmbS, lblQ, txtQ, btnOk, btnCancel });
 
@@ -330,6 +577,50 @@ namespace _9labap3
                 MessageBox.Show("СИЗ списан!", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        // ============================================
+        // ВСПОМОГАТЕЛЬНЫЕ
+        // ============================================
+
+        private Form CreateForm(string title, int width, int height)
+        {
+            return new Form
+            {
+                Text = title,
+                Size = new Size(width, height),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                Font = new Font("Segoe UI", 10),
+                BackColor = Color.WhiteSmoke
+            };
+        }
+
+        private TextBox AddInputField(Form form, string label, int top, string defaultValue = "")
+        {
+            var lbl = new Label
+            {
+                Text = label,
+                Left = 20,
+                Top = top,
+                Width = 110,
+                Height = 25
+            };
+
+            var txt = new TextBox
+            {
+                Left = 140,
+                Top = top,
+                Width = 240,
+                Height = 28,
+                Text = defaultValue
+            };
+
+            form.Controls.Add(lbl);
+            form.Controls.Add(txt);
+            return txt;
         }
     }
 }

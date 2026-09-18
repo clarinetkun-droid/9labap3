@@ -46,7 +46,6 @@ namespace _9labap3
                     cmd.ExecuteNonQuery();
                 }
 
-                // Начальные данные (только при первом запуске)
                 string seed = @"
                     INSERT INTO SIZList (Name, Size, WearPeriodMonths) 
                     SELECT 'Каска защитная', '54-60', 24 
@@ -164,6 +163,52 @@ namespace _9labap3
                 }
             }
             return list;
+        }
+
+        public static void AddSIZ(string name, string size, int periodMonths)
+        {
+            using (var conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SQLiteCommand(
+                    "INSERT INTO SIZList (Name, Size, WearPeriodMonths) VALUES (@n, @s, @p)", conn))
+                {
+                    cmd.Parameters.AddWithValue("@n", name);
+                    cmd.Parameters.AddWithValue("@s", size ?? "");
+                    cmd.Parameters.AddWithValue("@p", periodMonths);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void UpdateSIZ(int id, string name, string size, int periodMonths)
+        {
+            using (var conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SQLiteCommand(
+                    "UPDATE SIZList SET Name=@n, Size=@s, WearPeriodMonths=@p WHERE Id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@n", name);
+                    cmd.Parameters.AddWithValue("@s", size ?? "");
+                    cmd.Parameters.AddWithValue("@p", periodMonths);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void DeleteSIZ(int id)
+        {
+            using (var conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SQLiteCommand("DELETE FROM SIZList WHERE Id=@id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         // ========== ВЫДАЧА ==========
